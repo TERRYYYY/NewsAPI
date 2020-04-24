@@ -7,6 +7,7 @@ def index ():
     '''
     View root page function that returns the index page and its data
     '''
+    title = 'Habari Chap Chap!'
     return render_template('index.html')
 
 @app.route('/news/<int:news_id>')
