@@ -39,11 +39,11 @@ def process_results(news_list):
         description = news_item('description')
         publishedAt = news_item('publishedAt')
         author = news_item('author')
-        poster = news_item('urlToImage')
+        urlToImage = news_item('urlToImage')
         url = news_item('url')
 
-        if poster:
-            news_object = News(id,name,description,publishedAt,author,poster,url)
+        if urlToImage:
+            news_object = News(id,name,description,publishedAt,author,urlToImage,url)
             news_results.append(news_object)
-            
+
         return news_results
