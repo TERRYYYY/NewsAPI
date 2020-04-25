@@ -9,6 +9,12 @@
     {%endif%}
 </head>
 <body>
+    <h3>Trending News</h3>
+    <ul>
+        {% for trending_news in trending %}
+        <li>{{trending_news.name}}</li>
+
+    </ul>
     
 </body>
 </html>
