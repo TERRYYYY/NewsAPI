@@ -1,1 +1,25 @@
 <h1>Hello News {{id}} </h1>
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {%if title% }
+    <title> {{ title }} </title>
+    {%else%}
+    <title>Habari Chap Chap </title>
+    {%endif%}
+</head>
+
+<body>
+    {% block content % }
+    <h3>Trending News</h3>
+    <ul>
+        {{macro.displayNewsList(trending)}}
+    </ul>
+    {% endblock % }
+    
+</body>
+</html>
