@@ -8,5 +8,5 @@ class News:
         self.description=description
         self.publishedAt=publishedAt
         self.author=author
-        self.urlToImage=urlToImage
+        self.poster='https://cdn.mos.cms.futurecdn.net/bfTp9yFjG7PTBKTMifd28m-1200-80.jpg' + poster
         self.url=url
