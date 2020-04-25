@@ -1,6 +1,7 @@
 from app import app
 import urllib.request,json
 from .models import news 
+from .config import Config
 
 News = news.News
 
@@ -11,10 +12,12 @@ api_key = app.config ['NEWS_API_KEY']
 base_url =app.config["NEWS_API_BASE_URL"]
 
 def get_news(category):
+
     '''
     Function that gets json response to our url request
     '''
-    get_news_url = 'https://newsapi.org/v2/everything?q={}&apiKey=12d688c8a85c4864ba3c8dac4ee62038'.format(category,api_key)
+    get_news_url = base_url.format(category,api_key)
+    # https://newsapi.org/v2/everything?q={}&apiKey=12d688c8a85c4864ba3c8dac4ee62038
     # 'https://newsapi.org/v2/everything?q={}&apiKey={}'
     # 'https://api.themoviedb.org/3/movie/{}?api_key={}'
 
