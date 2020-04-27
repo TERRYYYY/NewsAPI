@@ -5,8 +5,9 @@
             <img src="{{news.urlToImage}}" alt="{{news.name}} image" class="img-responsive">
             <li class="text-center">
                 <a href="/news/{{news.id}}">
-                    {{ news.name|truncate(10)}}</a>
+                    {{news.name|truncate(10)}}</a>
             </li>
+            <h1>{{news.name}} </h1>
         </div>
     {% endfor %}
 {% endmacro %}

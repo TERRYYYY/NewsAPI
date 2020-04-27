@@ -1,15 +1,19 @@
 from app import app
 import urllib.request,json
-from .models import news 
+from .models import news
+from .models import Article
 from .config import Config
 
 News = news.News
+Article = article.Article
 
 #Getting api key
 api_key = app.config ['NEWS_API_KEY']
 
 #Getting news base url
-base_url =app.config["NEWS_API_BASE_URL"]
+base_url =app.config['NEWS_API_BASE_URL']
+
+article_url = app.config['ARTICLE_BASE_URL']
 
 
 def get_news(category):
@@ -17,10 +21,13 @@ def get_news(category):
     '''
     Function that gets json response to our url request
     '''
-    get_news_url = 'http://newsapi.org/v2/everything?q={}&apiKey={}'.format(category,api_key)
+
+    get_news_url = base_url.format(category,api_key)
+    # https://newsapi.org/v2/{}?q={}&apiKey={}
     # https://newsapi.org/v2/everything?q={}&apiKey=12d688c8a85c4864ba3c8dac4ee62038
     # 'https://newsapi.org/v2/everything?q={}&apiKey={}'
     # 'https://api.themoviedb.org/3/movie/{}?api_key={}'
+    print(get_news_url)
 
     with urllib.request.urlopen(get_news_url) as url:
         get_news_data = url.read()
@@ -54,25 +61,63 @@ def process_results(news_list):
 
         return news_results
 
-def get_mynews(id):
-    get_mynews_details_url = base_url.format(id,api_key)
+def get_article(id):
 
-    with urllib.request.urlopen(get_mynews_url) as url:
-        mynews_details_data = url.read()
-        mynews_details_response = json.loads(mynews_details_data)
 
-        mynews_details = None
-        if mynews_details_response:
-            id = mynews_details_response.get('id')
-            name = mynews_details_response.get('name')
-            description = mynews_details_response.get('description')
-            publishedAt = mynews_details_response.get('publishedAt')
-            author = mynews_details_response.get('author')
-            urlToImage = mynews_details_response.get('urlToImage')
-            url = mynews_details_response.get('url')
+    get_article_url=article_url.format(id,api_key)
+    print (get_article_url)
+
+
+    # get_article_url=article_url.format(id,api_key)
+    # print(get_article_url)
+
+    with urllib.request.urlopen(get_article_url) as url:
+
+        get_article_data=url.read()
+        get_article_response= json.loads(get_article_data)
+
+    article_results=None
+    if get_article_response['articles']:
+      article_results_list = get_article_response['articles']
+      article_results = process_articles(article_results_list)
+    return article_results
+
+def process_articles(article_list):
+  
+    article_results = []
+    for article_item in article_list:
+
+        author=article_item.get('author')
+        title= article_item.get('title')
+        publishedAt= article_item.get('publishedAt')
+        content = article_item.get('content')
+        url=article_item.get('url')
+
+        if title:
+            article_object = ARTICLE(author,title,publishedAt,content,url)
+            article_results.append(article_object)
+        return article_results
+
+
+# def get_article(id):
+#     get_article_details_url = article_url.format(id,api_key)
+
+#     with urllib.request.urlopen(get_article_url) as url:
+#         article_details_data = url.read()
+#         article_details_response = json.loads(article_details_data)
+
+#         article_details = None
+#         if article_details_response:
+#             id = mynews_details_response.get('id')
+#             name = mynews_details_response.get('name')
+#             description = mynews_details_response.get('description')
+#             publishedAt = mynews_details_response.get('publishedAt')
+#             author = mynews_details_response.get('author')
+#             urlToImage = mynews_details_response.get('urlToImage')
+#             url = mynews_details_response.get('url')
        
 
-            mynews_object = News(id,name,description,publishedAt,author,urlToImage,url)
+#             mynews_object = News(id,name,description,publishedAt,author,urlToImage,url)
     
 
-        return mynews_object
+#         return mynews_object
