@@ -1,26 +1,23 @@
-from app import app
 import urllib.request,json
 from .models import News
 from .models import Article
-from .config import Config
 
-News = news.News
-Article = article.Article
+# News = news.News
+# Article = article.Article
 
 #Getting api key
 api_key = None
 
 #Getting news base url
-base_url =app.config['NEWS_API_BASE_URL']
-
-article_url = app.config['ARTICLE_BASE_URL']
+base_url =None
+article_url = None
 
 def configure_request(app):
     global api_key,base_url,article_url
     api_key = app.config['NEWS_API_KEY']
     base_url =app.config['NEWS_API_BASE_URL']
     article_url = app.config['ARTICLE_BASE_URL']
-    
+
 
 
 def get_news(category):
@@ -40,9 +37,9 @@ def get_news(category):
         get_news_data = url.read()
         get_news_response = json.loads(get_news_data)
 
-        news_results = None
+        news_results = ' '
 
-        if get_news_response['results']:
+        if get_news_response.get('results'):
             news_results_list = get_news_response['results']
             news_results = process_results(news_results_list)
 
