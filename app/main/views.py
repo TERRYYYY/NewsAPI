@@ -9,6 +9,6 @@ def index():
     return render_template('index.html',trending=trending_news)
 
 @main.route('/news/<id>')
-def sources(id):
+def article(id):
     articles = get_article(id)
-    return render_template('articles.html' , name = id , article = article)
+    return render_template('articles.html' , name = name , article = article)
