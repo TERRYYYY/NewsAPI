@@ -8,7 +8,8 @@ def index():
 
     return render_template('index.html',trending=trending_news)
 
-@main.route('/news/<id>')
+@main.route('/articles/<id>')
 def article(id):
-    articles = get_article(id)
-    return render_template('articles.html' , name = name , article = article)
+    article = get_article(id)
+    source=id
+    return render_template('article.html',article = article,source=source)

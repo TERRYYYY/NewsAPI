@@ -1,6 +1,8 @@
 # Trending News
 By Kariuki Terry 
 
+Live Link:https://trending-newss.herokuapp.com/
+
 ## Description
 A python-flask based application that enables the listing of news-updates/sources and preview of news-articles from various sources.
 

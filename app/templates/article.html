@@ -1,18 +1,9 @@
 {% extends 'base.html' %}
-{%  from 'article_macro.html' import display_articles %}
-
-{% block title %}article{% endblock %}
-
-
-<div class="container">
+{% import 'article_macro.html' as macro%}
 
     {% block content %}
-    <div class="page-header">
-        <h3 class="text-center">Articles from {{ name }}</h3>
-    </div>
 
+        <div>{{ macro.displayArticles(article)}} </div>
 
-    <div>{{ display_articles(articles) }}</div>
+    {% endblock %}
 
-</div>
-{% endblock %}

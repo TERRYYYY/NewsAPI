@@ -17,9 +17,6 @@ def configure_request(app):
     api_key = app.config['NEWS_API_KEY']
     base_url =app.config['NEWS_API_BASE_URL']
     article_url = app.config['ARTICLE_BASE_URL']
-
-
-
 def get_news(category):
 
     '''
@@ -37,10 +34,10 @@ def get_news(category):
         get_news_data = url.read()
         get_news_response = json.loads(get_news_data)
 
-        news_results = ' '
+        news_results = None
 
-        if get_news_response.get('results'):
-            news_results_list = get_news_response['results']
+        if get_news_response['sources']:
+            news_results_list = get_news_response['sources']
             news_results = process_results(news_results_list)
 
         return news_results
@@ -53,22 +50,21 @@ def process_results(news_list):
     for news_item in news_list:
         id = news_item.get('id')
         name = news_item.get('name')
-        description = news_item('description')
-        publishedAt = news_item('publishedAt')
-        author = news_item('author')
-        urlToImage = news_item('urlToImage')
-        url = news_item('url')
+        description = news_item.get('description')
+        url = news_item.get('url')
+        category = news_item.get('category')
+        language = news_item.get('language')
+        country = news_item.get('country')
+        
+        news_object = News(id,name,description,url,category,language,country)
+        news_results.append(news_object)
 
-        if urlToImage:
-            news_object = News(id,name,description,publishedAt,author,urlToImage,url)
-            news_results.append(news_object)
+    return news_results
 
-        return news_results
-
-def get_article(id):
+def get_article(source):
 
 
-    get_article_url=article_url.format(id,api_key)
+    get_article_url=article_url.format(source,api_key)
     print (get_article_url)
 
 
@@ -90,17 +86,19 @@ def process_articles(article_list):
   
     article_results = []
     for article_item in article_list:
-
+        id=article_item.get('id')
+        name=article_item.get('name')
         author=article_item.get('author')
+        description=article_item.get('description')
         title= article_item.get('title')
+        url=article_item.get('url')
+        urlToImage=article_item.get('urlToImage')
         publishedAt= article_item.get('publishedAt')
         content = article_item.get('content')
-        url=article_item.get('url')
-
-        if title:
-            article_object = ARTICLE(author,title,publishedAt,content,url)
-            article_results.append(article_object)
-        return article_results
+        
+        article_object = Article(id,name,author,title,description,url,urlToImage,publishedAt,content)
+        article_results.append(article_object)
+    return article_results
 
 
 # def get_article(id):
