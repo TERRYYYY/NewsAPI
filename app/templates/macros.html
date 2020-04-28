@@ -1,31 +1,24 @@
 {% macro displayNewsList (news_list) %}
 
     {% for news in news_list %}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="col-md-">
-                <div class="card-title">
-                    <h3>{{news.name}}</h1>
-                </div>
-                </div>
-                <div class="col-md-6">
-                <div class="card-body">
-                    <p>{{news.description}}</p>
-                    <p>Category: {{news.category}}</p>
-                    <p>Language:{{news.language}}</p>
-                    <!-- <a href="{{ news.url }}">Website:</a> -->
-                    <p>Website:<a href="{{ news.url }}">{{news.url}}</a> </p>
-
-                    <a href="/articles/{{ news.id }}" class="btn btn-primary">Check Articles</a>
-                </div>
-
-                
-            </div>
-            <!-- <button type="submit" class="btn btn-success"> View Articles </button> -->
-            
-            </div>
+    <div class="col-md-4" id="image">
+    <div class="card" style="width: 290px;height: 310px;background-color: rgb(255,192,203);margin-top: 30px;">
+        <div class="card-header" id="headername">
+            <h3 style="text-align: center; font-size: 25px;font-weight: 900;">{{news.name}}</h4>
         </div>
+        <div class="card-body" style="margin-left: 20px;">
+            <p>
+                {{news.description}}
+            </p>
+            <p>Category: {{news.category}}</p>
+            <p>Language: {{news.language}}</p>
+        </div>
+    
+        <div class="card footer">
+            <br />
+                    <a href="/articles/{{ news.id }}" class="btn btn-danger" style="text-align: center; margin-left: 40px;">Check Articles</a>
+        </div>
+    </div>
     </div>
     {% endfor %}
 {% endmacro %}
